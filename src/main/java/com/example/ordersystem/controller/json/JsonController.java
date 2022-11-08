@@ -40,7 +40,7 @@ public class JsonController {
             obj.addProperty("start", "2022-11-08 08:00");
             obj.addProperty("end", "2022-11-08 09:00");
 
-            obj.addProperty("allDay", false);
+            obj.addProperty("allDay", false);//
             // 하나의 예약정보라도 널값이면 에러남
             ja.add(obj);
         }
