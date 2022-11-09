@@ -11,4 +11,6 @@ public interface LectureRoomRepository extends JpaRepository<LectureRoom, Long> 
 
     LectureRoom findByLectureRoomName(String LectureRoomName);
     LectureRoom findLectureRoomById(long id);
+    @Query("select l from LectureRoom l")
+    List<LectureRoom> findAllLectureRoom();
 }

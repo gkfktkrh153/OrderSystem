@@ -69,7 +69,7 @@
                                 <td th:text ="${reservation.account.username}"></td>
                                 <td th:text ="${reservation.startTime}"></td>
                                 <td th:text ="${reservation.endTime}"></td>
-                                <td th:text ="${reservation.location}"></td>
+                                <td th:text ="${reservation.lectureRoom.lectureRoomName}"></td>
                                 <td>
                                     <a href="#" th:href="'javascript:cancel('+${reservation.id}+')'"
                                        class="btn btn-danger">삭제</a>

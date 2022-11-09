@@ -68,7 +68,7 @@
                                 <td th:text ="${reservation.account.username}"></td>
                                 <td th:text ="${reservation.startTime}"></td>
                                 <td th:text ="${reservation.endTime}"></td>
-                                <td th:text ="${reservation.location}"></td>
+                                <td th:text ="${reservation.lectureRoom.lectureRoomName}"></td>
                                 <td>
                                     <a href="#" th:href="'javascript:approval('+${reservation.id}+')'"
                                        class="btn btn-sm btn-primary">승인</a>

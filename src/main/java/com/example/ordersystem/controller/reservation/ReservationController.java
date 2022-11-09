@@ -2,8 +2,10 @@ package com.example.ordersystem.controller.reservation;
 
 import com.example.ordersystem.domain.dto.ReservationDto;
 import com.example.ordersystem.domain.entity.Account;
+import com.example.ordersystem.domain.entity.LectureRoom;
 import com.example.ordersystem.domain.entity.Reservation;
 import com.example.ordersystem.domain.entity.ReservationStatus;
+import com.example.ordersystem.repository.LectureRoomRepository;
 import com.example.ordersystem.repository.ReservationRepository;
 import com.example.ordersystem.repository.UserRepository;
 import com.example.ordersystem.security.service.AccountContext;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class ReservationController {
     ReservationService reservationService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LectureRoomRepository lectureRoomRepository;
+
 
     @GetMapping(value = "/admin/reservation/management") // 예약관리
     public String adminManagementReservation(Model model) {
@@ -59,21 +65,31 @@ public class ReservationController {
         Reservation reservation = new Reservation();
         Account account = (Account) authentication.getPrincipal();
         String userName = account.getUsername();
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+        for (LectureRoom lectureRoom : lectureRooms)
+        {
+            System.out.println(lectureRoom.getLectureRoomName());
+        }
+        model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
         model.addAttribute(reservation);
+
 
         return "admin/reservation/resist";
     }
 
     @PostMapping(value = "/admin/reservation/resist") // 예약등록
-    public String adminResistReservation(ReservationDto reservationDto, Authentication authentication) {
+    public String adminResistReservation(ReservationDto reservationDto, Authentication authentication, @RequestParam("lectureRoomId") Long lectureRoomId) {
         Account account= (Account) authentication.getPrincipal();
         //System.out.println(account);
+
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(lectureRoomId);
 
         ModelMapper modelMapper = new ModelMapper();
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);
         reservation.setStatus(ReservationStatus.APPROVAL);
         reservation.setAccount(account);
+        reservation.setLectureRoom(lectureRoom);
 
         reservationService.createReservation(reservation);
         return "redirect:/admin/reservation/management";
