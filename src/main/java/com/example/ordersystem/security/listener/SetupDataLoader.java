@@ -1,10 +1,7 @@
 package com.example.ordersystem.security.listener;
 
 import com.example.ordersystem.domain.entity.*;
-import com.example.ordersystem.repository.ReservationRepository;
-import com.example.ordersystem.repository.ResourcesRepository;
-import com.example.ordersystem.repository.RoleRepository;
-import com.example.ordersystem.repository.UserRepository;
+import com.example.ordersystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -31,6 +28,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private LectureRoomRepository lectureRoomRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -77,9 +77,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createResourceIfNotFound("/user/**", "", rolesUser, "url");
 
-        createReservationIfNotFound("멘토링1",LocalDate.parse("2022-10-28"), "12:00", "15:00",user1 ,"샬롬관 601호", WAITING);
-        createReservationIfNotFound("멘토링2", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,"샬롬관 603호", WAITING);
-        createReservationIfNotFound("멘토링3", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,"샬롬관 603호", APPROVAL);
+        LectureRoom lectureRoom1 = createLectureRoomIfNotFound("샬롬관 601호");
+
+        createReservationIfNotFound("멘토링1",LocalDate.parse("2022-10-28"), "12:00", "15:00",user1 ,lectureRoom1, WAITING);
+        createReservationIfNotFound("멘토링2", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,lectureRoom1, WAITING);
+        createReservationIfNotFound("멘토링3", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,lectureRoom1, APPROVAL);
 
         }
 
@@ -114,7 +116,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    public Reservation createReservationIfNotFound(final String reservationName, final LocalDate date, final String startTime, final String endTime, Account account, final String location, final ReservationStatus status) {
+    public Reservation createReservationIfNotFound(final String reservationName, final LocalDate date, final String startTime, final String endTime, Account account, final LectureRoom lectureRoom, final ReservationStatus status) {
 
         Reservation reservation = reservationRepository.findByReservationName(reservationName);
 
@@ -125,12 +127,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                     .startTime(startTime)
                     .endTime(endTime)
                     .account(account)
-                    .location(location)
+                    .lectureRoom(lectureRoom)
                     .status(status)
                     .build();
         }
         return reservationRepository.save(reservation);
     }
+
+    @Transactional
+    public LectureRoom createLectureRoomIfNotFound(final String lectureRoomName) {
+
+        LectureRoom lectureRoom = lectureRoomRepository.findByLectureRoomName(lectureRoomName);
+
+        if (lectureRoom == null) {
+            lectureRoom = lectureRoom.builder()
+                    .lectureRoomName(lectureRoomName)
+                    .build();
+        }
+        return lectureRoomRepository.save(lectureRoom);
+    }
+
+
     @Transactional
     public Resources createResourceIfNotFound(String resourceName, String httpMethod, Set<Role> roleSet, String resourceType) {
         Resources resources = resourcesRepository.findByResourceNameAndHttpMethod(resourceName, httpMethod);

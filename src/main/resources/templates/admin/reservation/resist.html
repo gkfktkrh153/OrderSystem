@@ -42,7 +42,8 @@
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">이름</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control input-large" name="username" id="username" placeholder="username" required>
+                    <input type="text" class="form-control input-large" name="username" id="username"
+                           th:value = "${userName}" readonly placeholder="reservationName" data-minlength="6" required>
                 </div>
             </div>
 

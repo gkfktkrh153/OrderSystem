@@ -1,6 +1,10 @@
 package com.example.ordersystem.security.handler;
 
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -15,18 +19,20 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        String errorMessage = "Invalid Username or Password";
+        String errorMessage;
+        if (exception instanceof BadCredentialsException) {
+            errorMessage = "ID or PASSWORD ERROR";
+        } else if (exception instanceof InternalAuthenticationServiceException) {
+            errorMessage = "System Error!";
+        } else if (exception instanceof UsernameNotFoundException) {
+            errorMessage = "Not Account, Please resister";
+        } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
+            errorMessage = "Authetication Reject";
+        } else {
+            errorMessage = "알 수 없는 이유로 로그인에 실패하였습니다 관리자에게 문의하세요.";
+        }
+        setDefaultFailureUrl("/login?error=true&exception="+errorMessage);
 
-        /**
-         if ( exception instanceof BadCredentialsException ) {
-         errorMessage = "Invalid Username or Password";
-         } else if ( exception instanceof InsufficientAuthenticationException ) {
-         errorMessage = "Invalid Secret Key";
-         }
-         */
-
-        setDefaultFailureUrl("/login?error=true&exception=" + exception.getMessage());
-        System.out.println( exception.getMessage());
         super.onAuthenticationFailure(request, response, exception);
 
     }

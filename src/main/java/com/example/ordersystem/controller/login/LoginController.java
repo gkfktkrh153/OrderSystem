@@ -18,7 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
     @GetMapping(value = "/login")
-    public String home(){
+    public String login(@RequestParam(value = "error", required = false)String error,
+                        @RequestParam(value = "exception", required = false)String exception,
+                        Model model) {
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
         return "login";
     }
 

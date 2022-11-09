@@ -51,7 +51,15 @@ public class UserController {
 
         return "user/mypage";
     }
-
+    @GetMapping(value = "/user/timetable")
+    public String timeTablePage(Principal principal, Model model, Authentication authentication)
+    {
+        Account account= (Account)authentication.getPrincipal();
+        Long id = account.getId();
+        List<Reservation> reservations = reservationRepository.findAllReservationByAccountId(id);
+        model.addAttribute("reservations",reservations);
+        return "user/timetable";
+    }
 
     @GetMapping(value = "/resister")
     public String createUser(){

@@ -26,16 +26,11 @@ public class Reservation {
     @Column
     private String reservationName;
 
-
-
     @Column
     private String startTime;
 
     @Column
     private String endTime;
-
-    @Column
-    private String location;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -45,6 +40,10 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lectureRoom_id")
+    private LectureRoom lectureRoom;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;

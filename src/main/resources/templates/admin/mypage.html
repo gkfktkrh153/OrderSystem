@@ -74,7 +74,7 @@
 
             <div class="align-items-center ms-auto">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="시간표조회.html" class="nav-link">시간표조회</a></li>
+                    <li class="nav-item"><a href="/admin/timetable" class="nav-link">시간표조회</a></li>
                     <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">마이페이지</a></li>
                 </ul>
 
@@ -121,14 +121,13 @@
 
 <script th:src="@{fullcalendar/lib/main.js}"></script>
 <script>
-
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           displayEventEnd: true,
           events: {
-            url: '/json'
+            url: '/json/mypage'
 
           },
 
@@ -142,8 +141,7 @@
         calendar.render();
       });
 
-    </script>
-
+</script>
 
 </body>
 

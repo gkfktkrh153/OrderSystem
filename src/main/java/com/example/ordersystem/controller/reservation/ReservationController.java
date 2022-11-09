@@ -55,8 +55,11 @@ public class ReservationController {
 
 
     @GetMapping(value = "/admin/reservation/resist") // 예약등록 폼
-    public String adminResistReservation(Model model) {
+    public String adminResistReservation(Model model, Authentication authentication) {
         Reservation reservation = new Reservation();
+        Account account = (Account) authentication.getPrincipal();
+        String userName = account.getUsername();
+        model.addAttribute("userName", userName);
         model.addAttribute(reservation);
 
         return "admin/reservation/resist";
@@ -73,7 +76,7 @@ public class ReservationController {
         reservation.setAccount(account);
 
         reservationService.createReservation(reservation);
-        return "redirect:/admin/reservation/requestList";
+        return "redirect:/admin/reservation/management";
     }
 
     @GetMapping(value = "/admin/reservation/requestList") // 모든 USER들의 요청 목록
@@ -102,10 +105,13 @@ public class ReservationController {
 
 
     @GetMapping(value = "/user/reservation/request") // 예약신청 폼
-    public String userRequestReservation(Model model) {
+    public String userRequestReservation(Model model, Authentication authentication) {
 
         Reservation reservation = new Reservation();
         model.addAttribute(reservation);
+        Account account = (Account) authentication.getPrincipal();
+        String userName = account.getUsername();
+        model.addAttribute("userName", userName);
 
         return "user/reservation/request";
     }
