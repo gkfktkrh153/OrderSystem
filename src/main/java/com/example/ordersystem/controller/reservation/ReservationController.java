@@ -66,10 +66,8 @@ public class ReservationController {
         Account account = (Account) authentication.getPrincipal();
         String userName = account.getUsername();
         List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
-        for (LectureRoom lectureRoom : lectureRooms)
-        {
-            System.out.println(lectureRoom.getLectureRoomName());
-        }
+
+
         model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
         model.addAttribute(reservation);
@@ -124,22 +122,29 @@ public class ReservationController {
     public String userRequestReservation(Model model, Authentication authentication) {
 
         Reservation reservation = new Reservation();
-        model.addAttribute(reservation);
         Account account = (Account) authentication.getPrincipal();
         String userName = account.getUsername();
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+
+
+        model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
+        model.addAttribute(reservation);
 
         return "user/reservation/request";
     }
     @PostMapping(value = "/user/reservation/request") // 예약신청
-    public String userRequestReservation(ReservationDto reservationDto, Authentication authentication) {
+    public String userRequestReservation(ReservationDto reservationDto, Authentication authentication, @RequestParam("lectureRoomId") Long lectureRoomId) {
         Account account= (Account) authentication.getPrincipal();
-        System.out.println(account);
+        //System.out.println(account);
+
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(lectureRoomId);
 
         ModelMapper modelMapper = new ModelMapper();
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);
         reservation.setStatus(ReservationStatus.WAITING);
         reservation.setAccount(account);
+        reservation.setLectureRoom(lectureRoom);
 
         reservationService.createReservation(reservation);
         return "redirect:/user/reservation/list";

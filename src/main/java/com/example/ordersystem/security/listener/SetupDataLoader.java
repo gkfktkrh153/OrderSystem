@@ -67,21 +67,25 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Set<Role> rolesAdmin = new HashSet<>();
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", "관리자");
         rolesAdmin.add(adminRole);
-        createUserIfNotFound("admin", "admin@admin.com", "1234", rolesAdmin);
+        Account admin = createUserIfNotFound("admin", "admin@admin.com", "1234", rolesAdmin);
         createResourceIfNotFound("/admin/**", "", rolesAdmin, "url");
 
         Set<Role> rolesUser = new HashSet<>();
         Role userRole = createRoleIfNotFound("ROLE_USER", "사용자권한");
         rolesUser.add(userRole);
-        Account user1 = createUserIfNotFound("user1", "user@admin.com", "1234", rolesUser);
+        Account user = createUserIfNotFound("user", "user@admin.com", "1234", rolesUser);
 
         createResourceIfNotFound("/user/**", "", rolesUser, "url");
 
-        LectureRoom lectureRoom1 = createLectureRoomIfNotFound("샬롬관 601호");
+        LectureRoom lectureRoom1 = createLectureRoomIfNotFound("샬롬관 201호");
+        LectureRoom lectureRoom2 = createLectureRoomIfNotFound("샬롬관 202호");
+        LectureRoom lectureRoom3 = createLectureRoomIfNotFound("샬롬관 301호");
+        LectureRoom lectureRoom4 = createLectureRoomIfNotFound("샬롬관 401호");
 
-        createReservationIfNotFound("멘토링1",LocalDate.parse("2022-10-28"), "12:00", "15:00",user1 ,lectureRoom1, WAITING);
-        createReservationIfNotFound("멘토링2", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,lectureRoom1, WAITING);
-        createReservationIfNotFound("멘토링3", LocalDate.parse("2022-10-29"), "12:00", "15:00",user1 ,lectureRoom1, APPROVAL);
+        createReservationIfNotFound("소프트웨어공학",LocalDate.parse("2022-11-08"), "09:00", "12:00",admin ,lectureRoom1, APPROVAL);
+        createReservationIfNotFound("자료구조", LocalDate.parse("2022-11-09"), "12:00", "15:00",admin ,lectureRoom1, APPROVAL);
+        createReservationIfNotFound("알고리즘", LocalDate.parse("2022-11-09"), "09:00", "10:30",admin ,lectureRoom1, APPROVAL);
+        createReservationIfNotFound("캡스톤디자인", LocalDate.parse("2022-11-10"), "12:00", "15:00",admin ,lectureRoom1, APPROVAL);
 
         }
 
