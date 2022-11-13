@@ -82,10 +82,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         LectureRoom lectureRoom3 = createLectureRoomIfNotFound("샬롬관 301호");
         LectureRoom lectureRoom4 = createLectureRoomIfNotFound("샬롬관 401호");
 
-        createReservationIfNotFound("소프트웨어공학",LocalDate.parse("2022-11-08"), "09:00", "12:00",admin ,lectureRoom1, APPROVAL);
-        createReservationIfNotFound("자료구조", LocalDate.parse("2022-11-09"), "12:00", "15:00",admin ,lectureRoom1, APPROVAL);
-        createReservationIfNotFound("알고리즘", LocalDate.parse("2022-11-09"), "09:00", "10:30",admin ,lectureRoom1, APPROVAL);
-        createReservationIfNotFound("캡스톤디자인", LocalDate.parse("2022-11-10"), "12:00", "15:00",admin ,lectureRoom1, APPROVAL);
+        createReservationIfNotFound("소프트웨어공학",LocalDate.parse("2022-11-08"), "09:00", "12:00",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("자료구조", LocalDate.parse("2022-11-09"), "12:00", "15:00",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("알고리즘", LocalDate.parse("2022-11-09"), "09:00", "10:30",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("캡스톤디자인", LocalDate.parse("2022-11-10"), "12:00", "15:00",admin ,lectureRoom1, LECTURE);
 
         }
 

@@ -74,7 +74,7 @@
 
             <div class="align-items-center ms-auto">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="/admin/timetable" class="nav-link">시간표조회</a></li>
+                    <li class="nav-item"><a href="/admin/timetable/7" class="nav-link">시간표조회</a></li>
                     <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">마이페이지</a></li>
                 </ul>
 
@@ -126,6 +126,7 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           displayEventEnd: true,
+          locale: "ko",
           events: {
             url: '/json/mypage'
 
@@ -134,7 +135,8 @@
           eventTimeFormat: {
             hour: '2-digit',
             minute: '2-digit',
-            meridiem: false
+            meridiem: false,
+            hour12: false
           }
         });
 

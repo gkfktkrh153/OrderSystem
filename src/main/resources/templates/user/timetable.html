@@ -47,7 +47,7 @@
         <nav class="navbar bg-light navbar-light pt-4">
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
-                    <img class="rounded-circle" src="img/user.png" alt="" style="width: 40px; height: 40px;">
+                    <img class="rounded-circle" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
                     <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                 </div>
                 <div class="ms-3">
@@ -130,25 +130,35 @@
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
 
-<script>
+<script th:inline ="javascript">
+
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'timeGridWeek',
           displayEventEnd: true,
+          locale: "ko",
+          slotMinTime: "09:00",
+          slotMaxTime: "23:00",
+          titleFormat : function(date) {
+			return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+		  },
+
 
 
           events: {
-            url: '/json/timetable'
+            url: '/json/timetable/[[${id}]]'
 
           },
 
           eventTimeFormat: {
             hour: '2-digit',
             minute: '2-digit',
-            meridiem: false
-          }
+            meridiem: false,
+            hour12: false
+          },
+
         });
 
         calendar.render();

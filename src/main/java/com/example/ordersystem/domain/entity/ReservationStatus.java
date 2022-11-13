@@ -2,5 +2,5 @@ package com.example.ordersystem.domain.entity;
 
 
 public enum ReservationStatus {
-    APPROVAL,WAITING ,DENIAL
+    APPROVAL,WAITING ,DENIAL, LECTURE
 }

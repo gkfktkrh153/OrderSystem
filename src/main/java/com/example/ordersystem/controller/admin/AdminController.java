@@ -1,7 +1,9 @@
 package com.example.ordersystem.controller.admin;
 
 import com.example.ordersystem.domain.entity.Account;
+import com.example.ordersystem.domain.entity.LectureRoom;
 import com.example.ordersystem.domain.entity.Reservation;
+import com.example.ordersystem.repository.LectureRoomRepository;
 import com.example.ordersystem.repository.ReservationRepository;
 import com.example.ordersystem.repository.UserRepository;
 import com.example.ordersystem.service.UserService;
@@ -10,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,7 +21,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private LectureRoomRepository lectureRoomRepository;
     @Autowired
     private UserService userService;
 
@@ -30,13 +34,14 @@ public class AdminController {
         return "admin/mypage";
     }
 
-    @GetMapping(value = "/admin/timetable")
-    public String timeTablePage(Principal principal, Model model, Authentication authentication)
+    @GetMapping(value = "/admin/timetable/{id}")
+    public String timeTablePage(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId_)
     {
-        Account account= (Account)authentication.getPrincipal();
-        Long id = account.getId();
-        List<Reservation> reservations = reservationRepository.findAllReservationByAccountId(id);
-        model.addAttribute("reservations",reservations);
+
+        Long id = Long.parseLong(lectureRoomId_);
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(id);
+        model.addAttribute("name",lectureRoom.getLectureRoomName());
+        model.addAttribute("id",id);
         return "admin/timetable";
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
@@ -51,13 +52,11 @@ public class UserController {
 
         return "user/mypage";
     }
-    @GetMapping(value = "/user/timetable")
-    public String timeTablePage(Principal principal, Model model, Authentication authentication)
+    @GetMapping(value = "/user/timetable/{id}")
+    public String timeTablePage(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId_)
     {
-        Account account= (Account)authentication.getPrincipal();
-        Long id = account.getId();
-        List<Reservation> reservations = reservationRepository.findAllReservationByAccountId(id);
-        model.addAttribute("reservations",reservations);
+        Long jsonLink = Long.parseLong(lectureRoomId_);
+        model.addAttribute("jsonLink",jsonLink);
         return "user/timetable";
     }
 

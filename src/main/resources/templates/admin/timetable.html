@@ -93,7 +93,7 @@
         <div class="container-fluid pt-4 px-4 ">
             <div class=" text-center rounded p-4 bg-light">
                 <div class="row-vh d-flex flex-row mb-4"> <!--d-flex:자식들을 인라인블럭으로 바꿔줌, flex-row: 항목을 나란히  -->
-                    <div><h6>예약 현황</h6></div>
+                    <div><h4 th:text = "|${name} 예약현황|">예약 현황</h4></div>
                 </div>
                 <div id ='calendar'></div>
 
@@ -128,25 +128,35 @@
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
 
-<script>
+<script th:inline ="javascript">
+
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'timeGridWeek',
           displayEventEnd: true,
+          locale: "ko",
+          slotMinTime: "09:00",
+          slotMaxTime: "23:00",
+          titleFormat : function(date) {
+			return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+		  },
+
 
 
           events: {
-            url: '/json/timetable'
+            url: '/json/timetable/[[${id}]]'
 
           },
 
           eventTimeFormat: {
             hour: '2-digit',
             minute: '2-digit',
-            meridiem: false
-          }
+            meridiem: false,
+            hour12: false
+          },
+
         });
 
         calendar.render();
