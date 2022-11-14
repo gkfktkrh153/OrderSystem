@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,10 +49,12 @@ public class JsonController {
 
     @GetMapping(value = "/json/timetable/{id}")
     @ResponseBody
-    public String fullCalendar2(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId_)
+    public String fullCalendar2(Principal principal, Model model, Authentication authentication, @PathVariable("id") String lectureRoomId)
     {
-        long id = Long.parseLong(lectureRoomId_);
-
+        long id = Long.parseLong(lectureRoomId);
+        System.out.println("---------------------------------");
+        System.out.println(id);
+        System.out.println("---------------------------------");
         List<Reservation> reservations = reservationRepository.findAllApprovalReservationByLectureRoomId(id);
         List<Reservation> lectureReservations = reservationRepository.findAllLectureReservationByLectureRoomId(id);
 

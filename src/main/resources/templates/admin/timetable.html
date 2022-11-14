@@ -93,7 +93,21 @@
         <div class="container-fluid pt-4 px-4 ">
             <div class=" text-center rounded p-4 bg-light">
                 <div class="row-vh d-flex flex-row mb-4"> <!--d-flex:자식들을 인라인블럭으로 바꿔줌, flex-row: 항목을 나란히  -->
-                    <div><h4 th:text = "|${name} 예약현황|">예약 현황</h4></div>
+                        <div class="align-self-center"><h4 th:text = "|${name} 예약현황|">예약 현황</h4>
+                        </div>
+                        <form class="form ms-auto d-flex flex-row" th:action="@{/admin/timetable}" method="post">
+                            <div class="form-group align-self-center ">
+                                <select name="lectureRoomId" id="lectureRoomId" class="form-control input-large">
+                                    <option value="">선택</option>
+                                    <option th:each="lectureRoom : ${lectureRooms}"
+                                            th:value="${lectureRoom.id}"
+                                            th:text="${lectureRoom.lectureRoomName}" />
+                                </select>
+                            </div>
+                            <div class="form-group ms-1">
+                                <button type="Submit" class="btn btn-dark btn-lg">검색</button>
+                            </div>
+                        </form>
                 </div>
                 <div id ='calendar'></div>
 

@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -34,11 +35,25 @@ public class AdminController {
         return "admin/mypage";
     }
 
-    @GetMapping(value = "/admin/timetable/{id}")
-    public String timeTablePage(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId_)
+    @GetMapping(value = "/admin/timetable")
+    public String timeTablePage1(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId)
     {
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+        model.addAttribute("lectureRooms",lectureRooms);
 
-        Long id = Long.parseLong(lectureRoomId_);
+        Long id = Long.parseLong(lectureRoomId);
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(id);
+        model.addAttribute("name",lectureRoom.getLectureRoomName());
+        model.addAttribute("id",id);
+        return "admin/timetable";
+    }
+    @PostMapping(value = "/admin/timetable")
+    public String timeTablePage2(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId)
+    {
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+        model.addAttribute("lectureRooms",lectureRooms);
+
+        Long id = Long.parseLong(lectureRoomId);
         LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(id);
         model.addAttribute("name",lectureRoom.getLectureRoomName());
         model.addAttribute("id",id);

@@ -2,7 +2,9 @@ package com.example.ordersystem.controller.user;
 
 import com.example.ordersystem.domain.entity.Account;
 import com.example.ordersystem.domain.dto.AccountDto;
+import com.example.ordersystem.domain.entity.LectureRoom;
 import com.example.ordersystem.domain.entity.Reservation;
+import com.example.ordersystem.repository.LectureRoomRepository;
 import com.example.ordersystem.repository.ReservationRepository;
 import com.example.ordersystem.repository.UserRepository;
 import com.example.ordersystem.service.UserService;
@@ -33,6 +35,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private LectureRoomRepository lectureRoomRepository;
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -52,11 +56,28 @@ public class UserController {
 
         return "user/mypage";
     }
-    @GetMapping(value = "/user/timetable/{id}")
-    public String timeTablePage(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId_)
+    @GetMapping(value = "/user/timetable")
+    public String timeTablePage1(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId)
     {
-        Long jsonLink = Long.parseLong(lectureRoomId_);
-        model.addAttribute("jsonLink",jsonLink);
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+        model.addAttribute("lectureRooms",lectureRooms);
+
+        Long id = Long.parseLong(lectureRoomId);
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(id);
+        model.addAttribute("name",lectureRoom.getLectureRoomName());
+        model.addAttribute("id",id);
+        return "user/timetable";
+    }
+    @PostMapping(value = "/user/timetable")
+    public String timeTablePage2(Principal principal, Model model, Authentication authentication, @RequestParam(defaultValue = "7") String lectureRoomId)
+    {
+        List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
+        model.addAttribute("lectureRooms",lectureRooms);
+
+        Long id = Long.parseLong(lectureRoomId);
+        LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(id);
+        model.addAttribute("name",lectureRoom.getLectureRoomName());
+        model.addAttribute("id",id);
         return "user/timetable";
     }
 
