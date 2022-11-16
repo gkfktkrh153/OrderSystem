@@ -52,9 +52,6 @@ public class JsonController {
     public String fullCalendar2(Principal principal, Model model, Authentication authentication, @PathVariable("id") String lectureRoomId)
     {
         long id = Long.parseLong(lectureRoomId);
-        System.out.println("---------------------------------");
-        System.out.println(id);
-        System.out.println("---------------------------------");
         List<Reservation> reservations = reservationRepository.findAllApprovalReservationByLectureRoomId(id);
         List<Reservation> lectureReservations = reservationRepository.findAllLectureReservationByLectureRoomId(id);
 
@@ -91,7 +88,7 @@ public class JsonController {
 
         for(Reservation re: lectureReservations){
 
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < 8; i++) {
                 JsonObject obj = new JsonObject();
                 obj.addProperty("title", re.getReservationName());
                 obj.addProperty("start", re.getDate().plusWeeks(i).format(DateTimeFormatter.ofPattern("yyyy-MM-dd ")) + re.getStartTime());

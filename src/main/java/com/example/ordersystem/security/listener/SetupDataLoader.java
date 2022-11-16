@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.example.ordersystem.domain.entity.ReservationStatus.*;
 
 @Component
-public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class  SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private boolean alreadySetup = false;
 
@@ -77,17 +77,50 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createResourceIfNotFound("/user/**", "", rolesUser, "url");
 
-        LectureRoom lectureRoom1 = createLectureRoomIfNotFound("샬롬관 201호");
-        LectureRoom lectureRoom2 = createLectureRoomIfNotFound("샬롬관 202호");
-        LectureRoom lectureRoom3 = createLectureRoomIfNotFound("샬롬관 301호");
-        LectureRoom lectureRoom4 = createLectureRoomIfNotFound("샬롬관 401호");
+        LectureRoom lectureRoom1 = createLectureRoomIfNotFound("이공관 101호");
+        LectureRoom lectureRoom2 = createLectureRoomIfNotFound("이공관 103호");
+        LectureRoom lectureRoom3 = createLectureRoomIfNotFound("이공관 302호");
+        LectureRoom lectureRoom4 = createLectureRoomIfNotFound("이공관 310호");
+        LectureRoom lectureRoom5 = createLectureRoomIfNotFound("이공관 311호");
+        LectureRoom lectureRoom6 = createLectureRoomIfNotFound("이공관 312호");
 
-        createReservationIfNotFound("소프트웨어공학",LocalDate.parse("2022-11-08"), "09:00", "12:00",admin ,lectureRoom1, LECTURE);
-        createReservationIfNotFound("자료구조", LocalDate.parse("2022-11-09"), "12:00", "15:00",admin ,lectureRoom1, LECTURE);
-        createReservationIfNotFound("알고리즘", LocalDate.parse("2022-11-09"), "09:00", "10:30",admin ,lectureRoom1, LECTURE);
-        createReservationIfNotFound("캡스톤디자인", LocalDate.parse("2022-11-10"), "12:00", "15:00",admin ,lectureRoom1, LECTURE);
 
-        }
+        createReservationIfNotFound("컴퓨터프로그래밍(21)",LocalDate.parse("2022-11-07"), "09:00", "11:40",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("컴퓨터프로그래밍(19)",LocalDate.parse("2022-11-07"), "11:50", "14:30",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("프로그래밍언어(02)",LocalDate.parse("2022-11-07"), "14:40", "17:20",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("컴퓨터프로그래밍(13)",LocalDate.parse("2022-11-08"), "09:00", "11:40",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("영상콘텐츠제작실습(02)",LocalDate.parse("2022-11-08"), "14:40", "17:20",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("프로그래밍언어(02)",LocalDate.parse("2022-11-09"), "09:00", "12:40",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("특수아초등컴퓨터(00)",LocalDate.parse("2022-11-10"), "09:00", "11:40",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("프로그래밍언어(02)",LocalDate.parse("2022-11-10"), "11:50", "14:30",admin ,lectureRoom1, LECTURE);
+        createReservationIfNotFound("파이썬응용(02)",LocalDate.parse("2022-11-11"), "09:00", "11:40",admin ,lectureRoom1, LECTURE);
+
+        createReservationIfNotFound("디자인콘텐츠기획및제작(00)",LocalDate.parse("2022-11-07"), "11:50", "14:30",admin ,lectureRoom2, LECTURE);
+        createReservationIfNotFound("프로그래밍언어(01)",LocalDate.parse("2022-11-07"), "14:30", "17:20",admin ,lectureRoom2, LECTURE);
+        createReservationIfNotFound("데이터베이스(02)",LocalDate.parse("2022-11-08"), "09:00", "12:40",admin ,lectureRoom2, LECTURE);
+        createReservationIfNotFound("C프로그래밍(03)",LocalDate.parse("2022-11-09"), "09:00", "12:40",admin ,lectureRoom2, LECTURE);
+        createReservationIfNotFound("데이터베이스(03)",LocalDate.parse("2022-11-09"), "13:40", "17:20",admin ,lectureRoom2, LECTURE);
+
+        createReservationIfNotFound("파이썬응용(03)",LocalDate.parse("2022-11-09"), "09:00", "11:40",admin ,lectureRoom3, LECTURE);
+
+        createReservationIfNotFound("도시설계(00)",LocalDate.parse("2022-11-09"), "11:50", "16:30",admin ,lectureRoom4, LECTURE);
+
+        createReservationIfNotFound("C프로그래밍(02)",LocalDate.parse("2022-11-07"), "13:40", "17:20",admin ,lectureRoom5, LECTURE);
+        createReservationIfNotFound("가상현실응용(00)",LocalDate.parse("2022-11-08"), "14:40", "17:20",admin ,lectureRoom5, LECTURE);
+        createReservationIfNotFound("운영체제(02)",LocalDate.parse("2022-11-09"), "09:00", "12:40",admin ,lectureRoom5, LECTURE);
+        createReservationIfNotFound("기계학습(00)",LocalDate.parse("2022-11-11"), "13:40", "17:20",admin ,lectureRoom5, LECTURE);
+
+        createReservationIfNotFound("운영체제(03)",LocalDate.parse("2022-11-07"), "09:00", "12:40",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("객체지향프로그래밍(05)",LocalDate.parse("2022-11-07"), "14:40", "17:20",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("네트워크(01)",LocalDate.parse("2022-11-08"), "09:00", "12:40",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("네트워크(02)",LocalDate.parse("2022-11-08"), "13:40", "17:20",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("파이썬응용(01)",LocalDate.parse("2022-11-09"), "09:00", "11:40",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("VR파노라마(00)",LocalDate.parse("2022-11-09"), "11:50", "14:30",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("캡스톤디자인(VR)",LocalDate.parse("2022-11-10"), "09:00", "11:40",admin ,lectureRoom6, LECTURE);
+        createReservationIfNotFound("정보보호관리및정책(02)",LocalDate.parse("2022-11-11"), "11:50", "14:30",admin ,lectureRoom6, LECTURE);
+
+    }
+
 
     @Transactional
     public Role createRoleIfNotFound(String roleName, String roleDesc) {
