@@ -30,6 +30,4 @@ handlerbars:
   suffix: .html
   expose-session-attributes: true
 
-#server:
-#  address: 172.19.4.154
-#  port: 8080
+

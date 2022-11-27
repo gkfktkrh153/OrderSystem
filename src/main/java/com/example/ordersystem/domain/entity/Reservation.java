@@ -6,10 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.time.LocalTime;
+
 
 @Entity
 @Getter
@@ -27,10 +26,12 @@ public class Reservation {
     private String reservationName;
 
     @Column
-    private String startTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
     @Column
-    private String endTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime endTime;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

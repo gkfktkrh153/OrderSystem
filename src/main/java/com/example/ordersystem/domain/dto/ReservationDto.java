@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -22,9 +23,11 @@ public class ReservationDto {
 
     private String reservationName;
 
-    private String startTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
-    private String endTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime endTime;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

@@ -93,7 +93,7 @@ public class JsonController {
                 obj.addProperty("title", re.getReservationName());
                 obj.addProperty("start", re.getDate().plusWeeks(i).format(DateTimeFormatter.ofPattern("yyyy-MM-dd ")) + re.getStartTime());
                 obj.addProperty("end", re.getDate().plusWeeks(i).format(DateTimeFormatter.ofPattern("yyyy-MM-dd ")) + re.getEndTime());
-
+                obj.addProperty("description","test");
                 obj.addProperty("allDay", false);//
                 // 하나의 예약정보라도 널값이면 에러남
                 ja.add(obj);

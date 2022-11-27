@@ -13,4 +13,5 @@ public class AppConfig {
         SecurityResourcesService securityResourcesService = new SecurityResourcesService(resourcesRepository);
         return securityResourcesService;
     }
+
 }

@@ -61,13 +61,18 @@ public class ReservationController {
 
 
     @GetMapping(value = "/admin/reservation/resist") // 예약등록 폼
-    public String adminResistReservation(Model model, Authentication authentication) {
+    public String adminResistReservation(Model model, Authentication authentication,
+                                         @RequestParam(value = "error", required = false)String error,
+                                         @RequestParam(value = "exception", required = false)String exception
+    )
+    {
         Reservation reservation = new Reservation();
         Account account = (Account) authentication.getPrincipal();
         String userName = account.getUsername();
         List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
 
-
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
         model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
         model.addAttribute(reservation);
@@ -80,8 +85,13 @@ public class ReservationController {
     public String adminResistReservation(ReservationDto reservationDto, Authentication authentication, @RequestParam("lectureRoomId") Long lectureRoomId) {
         Account account= (Account) authentication.getPrincipal();
         //System.out.println(account);
+        boolean duplicate = reservationService.isDuplicate(reservationDto.getDate(), lectureRoomId, reservationDto.getStartTime(), reservationDto.getEndTime());
+        if (duplicate == true){
+            throw new IllegalArgumentException("해당 시간대에 예약이 존재합니다.");
+        }
 
         LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(lectureRoomId);
+
 
         ModelMapper modelMapper = new ModelMapper();
         Reservation reservation = modelMapper.map(reservationDto, Reservation.class);

@@ -4,6 +4,8 @@ package com.example.ordersystem.service;
 import com.example.ordersystem.domain.entity.Reservation;
 import com.example.ordersystem.domain.entity.Resources;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface ReservationService {
@@ -18,4 +20,7 @@ public interface ReservationService {
     void approvalReservation(long reservationId);
 
     void denialReservation(long reservationId);
+
+    boolean isDuplicate(LocalDate date, Long lectureRoomId,LocalTime startTime, LocalTime endTime);
+
 }
