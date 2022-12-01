@@ -21,6 +21,11 @@ spring: #띄어쓰기 없음
       cache: false
   thymeleaf:
       cache: false
+#  http:
+#    encoding:
+#      charset: UTF-8
+#      enabled: true
+#      force: true
 
 logging.level: #띄어쓰기 없음
   org.hibernate.SQL: debug #띄어쓰기 2칸
@@ -30,4 +35,9 @@ handlerbars:
   suffix: .html
   expose-session-attributes: true
 
-
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

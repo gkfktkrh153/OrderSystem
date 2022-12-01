@@ -73,6 +73,7 @@ public class ReservationController {
 
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
+        System.out.println("에러2: "+exception);
         model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
         model.addAttribute(reservation);
@@ -129,14 +130,18 @@ public class ReservationController {
 
 
     @GetMapping(value = "/user/reservation/request") // 예약신청 폼
-    public String userRequestReservation(Model model, Authentication authentication) {
+    public String userRequestReservation(Model model, Authentication authentication,
+                                         @RequestParam(value = "error", required = false)String error,
+                                         @RequestParam(value = "exception", required = false)String exception) {
 
         Reservation reservation = new Reservation();
         Account account = (Account) authentication.getPrincipal();
         String userName = account.getUsername();
         List<LectureRoom> lectureRooms = lectureRoomRepository.findAllLectureRoom();
 
-
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        System.out.println("에러3: "+exception);
         model.addAttribute("lectureRooms",lectureRooms);
         model.addAttribute("userName", userName);
         model.addAttribute(reservation);
@@ -147,6 +152,10 @@ public class ReservationController {
     public String userRequestReservation(ReservationDto reservationDto, Authentication authentication, @RequestParam("lectureRoomId") Long lectureRoomId) {
         Account account= (Account) authentication.getPrincipal();
         //System.out.println(account);
+        boolean duplicate = reservationService.isDuplicate(reservationDto.getDate(), lectureRoomId, reservationDto.getStartTime(), reservationDto.getEndTime());
+        if (duplicate == true){
+            throw new IllegalArgumentException("해당 시간대에 예약이 존재합니다.");
+        }
 
         LectureRoom lectureRoom = lectureRoomRepository.findLectureRoomById(lectureRoomId);
 
