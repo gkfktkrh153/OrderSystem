@@ -18,7 +18,7 @@ public class UrlResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<Req
     }
 
     @Override
-    public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getObject() throws Exception {
+    public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getObject() {
 
         if(resourceMap == null){
             init();
@@ -28,7 +28,7 @@ public class UrlResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<Req
     }
 
     private void init() {
-        resourceMap = securityResourceService.getResourceList();
+         resourceMap = securityResourceService.getResourceList();
     }
 
     @Override

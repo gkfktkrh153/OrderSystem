@@ -6,9 +6,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
 public class SecurityResourcesService {
 
 
-    private ResourcesRepository resourcesRepository;
+    private final ResourcesRepository resourcesRepository;
 
     public SecurityResourcesService(ResourcesRepository resourcesRepository) {
         this.resourcesRepository = resourcesRepository;
@@ -33,7 +31,7 @@ public class SecurityResourcesService {
                 System.out.println(role.getRoleName());
                 configAttributeList.add(new SecurityConfig(role.getRoleName()));
                 // ConfigAttribute의 구현체인 SecurityConfig 타입으로 객체를 담는다
-                result.put(new AntPathRequestMatcher(re.getResourceName()), configAttributeList);
+                 result.put(new AntPathRequestMatcher(re.getResourceName()), configAttributeList);
             });
         });
         return result;

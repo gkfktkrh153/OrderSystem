@@ -1,12 +1,8 @@
 package com.example.ordersystem.service.impl;
 
 import com.example.ordersystem.domain.entity.LectureRoom;
-import com.example.ordersystem.domain.entity.Reservation;
-import com.example.ordersystem.domain.entity.ReservationStatus;
 import com.example.ordersystem.repository.LectureRoomRepository;
-import com.example.ordersystem.repository.ReservationRepository;
 import com.example.ordersystem.service.LectureRoomService;
-import com.example.ordersystem.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -24,7 +20,7 @@ public class LectureRoomServiceImpl implements LectureRoomService {
 
     @Transactional
     public LectureRoom getLectureRoom(long id) {
-        return lectureRoomRepository.findById(id).orElse(new LectureRoom());
+        return lectureRoomRepository.findById(id).orElse(new LectureRoom()); // orElse -> 값이 없을경우 new LectureRoom
 
     }
 
